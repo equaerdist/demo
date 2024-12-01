@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     cors: false,
     proxy: {
-      "/api": "http://185.185.69.84:8888",
+      "/api": "http://localhost:8080",
     },
   },
 });
