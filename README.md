@@ -37,6 +37,6 @@ docker compose up
 
    git clone <ссылка*на*репозиторий>
 
-2. Перейдите в директорию employee-service и запустите docker compose up.
+2. Перейдите в директорию employee-service и запустите docker compose up, предварительно переименовав example.env в .env.
 
 3. Перейдите в директорию employee-web и выполните npm install, а затем npm run dev.
