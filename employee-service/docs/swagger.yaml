@@ -1,0 +1,254 @@
+basePath: /
+definitions:
+  echo.HTTPError:
+    properties:
+      message: {}
+    type: object
+  github_com_cutlery47_employee-service_internal_model.BaseEmployee:
+    properties:
+      family_name:
+        type: string
+      id:
+        type: integer
+      is_general:
+        type: boolean
+      middle_name:
+        type: string
+      name:
+        type: string
+      position:
+        type: string
+      role:
+        type: string
+      unit:
+        type: string
+      units:
+        additionalProperties:
+          type: string
+        description: название текущего юнита -> название высшестоящего юнита
+        type: object
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetBaseEmployeesRequest:
+    properties:
+      city:
+        type: string
+      full_name:
+        type: string
+      limit:
+        type: integer
+      offset:
+        type: integer
+      position:
+        type: string
+      project:
+        type: string
+      role:
+        type: string
+      unit:
+        type: string
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetBaseEmployeesResponse:
+    properties:
+      employees:
+        items:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.BaseEmployee'
+        type: array
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetEmployeeRequest:
+    properties:
+      id:
+        type: integer
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetEmployeeResponse:
+    properties:
+      birth_date:
+        type: string
+      city:
+        type: string
+      family_name:
+        type: string
+      id:
+        type: integer
+      middle_name:
+        type: string
+      name:
+        type: string
+      office_address:
+        type: string
+      phone:
+        type: string
+      position:
+        type: string
+      project:
+        type: string
+      role:
+        type: string
+      teammates:
+        items:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.BaseEmployee'
+        type: array
+      unit_id:
+        type: integer
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetHintRequest:
+    properties:
+      city_search_term:
+        type: string
+      name_search_term:
+        type: string
+      position_search_term:
+        type: string
+      project_search_term:
+        type: string
+      role_search_term:
+        type: string
+      unit_search_term:
+        type: string
+    type: object
+  github_com_cutlery47_employee-service_internal_model.GetUnitRequest:
+    properties:
+      id:
+        type: integer
+    type: object
+  github_com_cutlery47_employee-service_internal_model.Unit:
+    properties:
+      id:
+        type: integer
+      leader_full_name:
+        type: string
+      name:
+        type: string
+      partisipants:
+        items:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.BaseEmployee'
+        type: array
+      unit_parent_id:
+        type: integer
+      units:
+        items:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.Unit'
+        type: array
+    type: object
+info:
+  contact:
+    name: DEVils
+  title: Employee Service
+  version: 0.0.1
+paths:
+  /api/v1/employee:
+    post:
+      parameters:
+      - description: json body
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetEmployeeRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetEmployeeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Полуение конкретного сотрудника
+      tags:
+      - Employee
+  /api/v1/employees:
+    post:
+      parameters:
+      - description: json body
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetBaseEmployeesRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetBaseEmployeesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Полуение сотрудников по фильтрам
+      tags:
+      - Employee
+  /api/v1/hint:
+    post:
+      parameters:
+      - description: json body
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetHintRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetBaseEmployeesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Получение подсказок по полям
+      tags:
+      - Hint
+  /api/v1/unit:
+    post:
+      parameters:
+      - description: json body
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.GetUnitRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_cutlery47_employee-service_internal_model.Unit'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Получение данных о юните
+      tags:
+      - Unit
+swagger: "2.0"
